@@ -9,11 +9,54 @@
 
     <link rel="icon" type="png" href="image/robot_icon.png">
 
-    <link rel="stylesheet" href="css/style.css?v=1.0">
+    <!-- <link rel="stylesheet" href="css/style.css?v=1.0"> -->
+    <style>
+        #container
+        {
+            display: flex;
+            height: 98vh;
+            width: 98vw;
+            justify-content: center;
+            align-content: center;
+        }
+        .grid
+        {
+            display: grid;
+            height: 1000px;
+            width: 1000px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: springgreen;
+            grid-template-columns: repeat(100, 1fr);
+            grid-template-rows: repeat(100, 1fr);
+        }
+        .boxes
+        {
+            background-color: thistle;
+        }
+    </style>
 </head>
 
 <body>
-    <script src="js/script.js"></script>
+    <div id="container"></div>
+    
+    <!-- <script src="js/script.js"></script> -->
+    <script>
+        const container = document.getElementById("container");
+        
+        const grid = document.createElement("div");
+        grid.classList.add("grid");
+        container.appendChild(grid);
+
+        let box;
+
+        for(let i = 0; i < 10000; i++)
+        {
+            box = document.createElement("div")
+            box.classList.add("boxes");
+            grid.appendChild(box);
+        }
+    </script>
 </body>
 
 </html>
