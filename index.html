@@ -18,8 +18,9 @@
             width: 98vw;
             justify-content: center;
             align-content: center;
+            flex-flow: row;
         }
-        .grid
+        /* .grid
         {
             display: grid;
             height: 1000px;
@@ -29,11 +30,7 @@
             border-color: springgreen;
             grid-template-columns: repeat(100, 1fr);
             grid-template-rows: repeat(100, 1fr);
-        }
-        .boxes:hover
-        {
-            background-color: black;
-        }
+        } */
     </style>
 </head>
 
@@ -43,9 +40,14 @@
     <!-- <script src="js/script.js"></script> -->
     <script>
         const container = document.getElementById("container");
-        
         const grid = document.createElement("div");
-        // grid.classList.add("grid");
+        grid.style.display = "grid";
+        grid.style.height = "1000px";
+        grid.style.width = "1000px";
+        grid.style.borderStyle = "solid";
+        grid.style.borderWidth = "1px";
+        grid.style.borderColor = "springgreen";
+
         let boxSize = 16;
         while (true)
         {
@@ -56,27 +58,48 @@
                 break;
             }
         }
-
-        grid.style.display = "grid";
-        grid.style.height = "1000px";
-        grid.style.width = "1000px";
-        grid.style.borderStyle = "solid";
-        grid.style.borderWidth = "1px";
-        grid.style.borderColor = "springgreen";
         grid.style.gridTemplateColumns = "repeat(" + boxSize + ", 1fr)";
         grid.style.gridTemplateRows = "repeat(" + boxSize + ", 1fr)";
-        
         container.appendChild(grid);
 
         let box;
-
         for(let i = 0; i < (Math.pow(boxSize, 2)); i++)
         {
             box = document.createElement("div")
-            box.style.backgroundColor = "thistle";
             box.classList.add("boxes");
+            box.style.backgroundColor = "rgb(255, 255, 255)";
             grid.appendChild(box);
         }
+        let boxHover = Array.from(document.getElementsByClassName("boxes"));
+        let backColor;
+        let R, G, B;
+
+        boxHover.forEach(element =>
+        {
+            element.addEventListener("mouseenter", () =>
+            {
+                backColor = element.style.backgroundColor;
+                if (backColor != "rgb(5, 5, 5)")
+                {
+                    R = (backColor.slice(4, 7)) - 25;
+                    if (Number.isNaN(R))
+                    {
+                        R = (backColor.slice(4, 6)) - 25;
+                    }
+                    G = (backColor.slice(9, 12)) - 25;
+                    if (Number.isNaN(G))
+                    {
+                        G = (backColor.slice(8, 10)) - 25;
+                    }
+                    B = (backColor.slice(14, 17)) - 25;
+                    if (Number.isNaN(B))
+                    {
+                        B = (backColor.slice(12, 14)) - 25;
+                    }
+                    element.style.backgroundColor = "rgb(" + R + ", " + G + ", " + B + ")";
+                }
+            });
+        });
     </script>
 </body>
 
