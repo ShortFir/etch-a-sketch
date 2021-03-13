@@ -30,9 +30,9 @@
             grid-template-columns: repeat(100, 1fr);
             grid-template-rows: repeat(100, 1fr);
         }
-        .boxes
+        .boxes:hover
         {
-            background-color: thistle;
+            background-color: black;
         }
     </style>
 </head>
@@ -45,14 +45,35 @@
         const container = document.getElementById("container");
         
         const grid = document.createElement("div");
-        grid.classList.add("grid");
+        // grid.classList.add("grid");
+        let boxSize = 16;
+        while (true)
+        {
+            boxSize = prompt("What size grid? (1 - 100): ", 16);
+            boxSize = Number(boxSize);
+            if (boxSize !== NaN && boxSize >= 1 && boxSize <= 100)
+            {
+                break;
+            }
+        }
+
+        grid.style.display = "grid";
+        grid.style.height = "1000px";
+        grid.style.width = "1000px";
+        grid.style.borderStyle = "solid";
+        grid.style.borderWidth = "1px";
+        grid.style.borderColor = "springgreen";
+        grid.style.gridTemplateColumns = "repeat(" + boxSize + ", 1fr)";
+        grid.style.gridTemplateRows = "repeat(" + boxSize + ", 1fr)";
+        
         container.appendChild(grid);
 
         let box;
 
-        for(let i = 0; i < 10000; i++)
+        for(let i = 0; i < (Math.pow(boxSize, 2)); i++)
         {
             box = document.createElement("div")
+            box.style.backgroundColor = "thistle";
             box.classList.add("boxes");
             grid.appendChild(box);
         }
