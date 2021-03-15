@@ -41,66 +41,93 @@
     <script>
         const container = document.getElementById("container");
         const grid = document.createElement("div");
+        const buttons = document.createElement("div");
+        const gridSizeButton = document.createElement("button");
+        let boxSize;
+        let box;
+        let boxHover
+        let backColor;
+        let R, G, B;
+        
+        buttons.style.display = "flex";
+        buttons.style.flexFlow = "column";
+        buttons.style.justifyContent = "center";
+        buttons.style.alignContent = "center";
+        container.appendChild(buttons);
+
+        gridSizeButton.style.height = "75px";
+        gridSizeButton.style.width = "75px";
+        gridSizeButton.textContent = "New Grid Size";
+        gridSizeButton.style.textAlign = "justify";
+
+        gridSizeButton.addEventListener("click", () =>
+        {
+            while (grid.firstChild)
+            {
+                grid.removeChild(grid.firstChild);
+            }
+            createGrid()
+        });
+        buttons.appendChild(gridSizeButton);
+        
         grid.style.display = "grid";
         grid.style.height = "1000px";
         grid.style.width = "1000px";
         grid.style.borderStyle = "solid";
         grid.style.borderWidth = "1px";
         grid.style.borderColor = "springgreen";
-
-        let boxSize = 16;
-        while (true)
-        {
-            boxSize = prompt("What size grid? (1 - 100): ", 16);
-            boxSize = Number(boxSize);
-            if (boxSize !== NaN && boxSize >= 1 && boxSize <= 100)
-            {
-                break;
-            }
-        }
-        grid.style.gridTemplateColumns = "repeat(" + boxSize + ", 1fr)";
-        grid.style.gridTemplateRows = "repeat(" + boxSize + ", 1fr)";
         container.appendChild(grid);
-
-        let box;
-        for(let i = 0; i < (Math.pow(boxSize, 2)); i++)
+        
+        function createGrid ()
         {
-            box = document.createElement("div")
-            box.classList.add("boxes");
-            box.style.backgroundColor = "rgb(255, 255, 255)";
-            grid.appendChild(box);
-        }
-        let boxHover = Array.from(document.getElementsByClassName("boxes"));
-        let backColor;
-        let R, G, B;
-
-        boxHover.forEach(element =>
-        {
-            element.addEventListener("mouseenter", () =>
+            while (true)
             {
-                backColor = element.style.backgroundColor;
-                if (backColor != "rgb(5, 5, 5)")
+                boxSize = prompt("What size grid? (1 - 100): ", 16);
+                boxSize = Number(boxSize);
+                if (boxSize !== NaN && boxSize >= 1 && boxSize <= 100)
                 {
-                    R = (backColor.slice(4, 7)) - 25;
-                    if (Number.isNaN(R))
-                    {
-                        R = (backColor.slice(4, 6)) - 25;
-                    }
-                    G = (backColor.slice(9, 12)) - 25;
-                    if (Number.isNaN(G))
-                    {
-                        G = (backColor.slice(8, 10)) - 25;
-                    }
-                    B = (backColor.slice(14, 17)) - 25;
-                    if (Number.isNaN(B))
-                    {
-                        B = (backColor.slice(12, 14)) - 25;
-                    }
-                    element.style.backgroundColor = "rgb(" + R + ", " + G + ", " + B + ")";
+                    break;
                 }
+            }
+            grid.style.gridTemplateColumns = "repeat(" + boxSize + ", 1fr)";
+            grid.style.gridTemplateRows = "repeat(" + boxSize + ", 1fr)";
+            
+            for(let i = 0; i < (Math.pow(boxSize, 2)); i++)
+            {
+                box = document.createElement("div")
+                box.classList.add("boxes");
+                box.style.backgroundColor = "rgb(255, 255, 255)";
+                grid.appendChild(box);
+            }
+            boxHover = Array.from(document.getElementsByClassName("boxes"));
+            
+            boxHover.forEach(element =>
+            {
+                element.addEventListener("mouseenter", () =>
+                {
+                    backColor = element.style.backgroundColor;
+                    if (backColor != "rgb(5, 5, 5)")
+                    {
+                        R = (backColor.slice(4, 7)) - 25;
+                        if (Number.isNaN(R))
+                        {
+                            R = (backColor.slice(4, 6)) - 25;
+                        }
+                        G = (backColor.slice(9, 12)) - 25;
+                        if (Number.isNaN(G))
+                        {
+                            G = (backColor.slice(8, 10)) - 25;
+                        }
+                        B = (backColor.slice(14, 17)) - 25;
+                        if (Number.isNaN(B))
+                        {
+                            B = (backColor.slice(12, 14)) - 25;
+                        }
+                        element.style.backgroundColor = "rgb(" + R + ", " + G + ", " + B + ")";
+                    }
+                });
             });
-        });
+        }
     </script>
 </body>
-
 </html>
