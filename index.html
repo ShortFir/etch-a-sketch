@@ -11,26 +11,17 @@
 
     <!-- <link rel="stylesheet" href="css/style.css?v=1.0"> -->
     <style>
+        body
+        {
+            background-color: #7793ab;
+        }
         #container
         {
             display: flex;
-            height: 98vh;
-            width: 98vw;
             justify-content: center;
-            align-content: center;
+            align-items: center;
             flex-flow: row;
         }
-        /* .grid
-        {
-            display: grid;
-            height: 1000px;
-            width: 1000px;
-            border-style: solid;
-            border-width: 1px;
-            border-color: springgreen;
-            grid-template-columns: repeat(100, 1fr);
-            grid-template-rows: repeat(100, 1fr);
-        } */
     </style>
 </head>
 
@@ -43,23 +34,48 @@
         const grid = document.createElement("div");
         const buttons = document.createElement("div");
         const gridSizeButton = document.createElement("button");
+        const gridDichotomyButton = document.createElement("button");
+        const gridGradientButton = document.createElement("button");
+        const gridColorButton = document.createElement("button");
         let boxSize;
         let box;
         let boxHover
         let backColor;
         let R, G, B;
+        let gridColorOption = "dichotomy";
         
+        container.appendChild(grid);
+        container.appendChild(buttons);
+        buttons.appendChild(gridSizeButton);
+        buttons.appendChild(gridDichotomyButton);
+        buttons.appendChild(gridGradientButton);
+        buttons.appendChild(gridColorButton);
+
         buttons.style.display = "flex";
         buttons.style.flexFlow = "column";
         buttons.style.justifyContent = "center";
         buttons.style.alignContent = "center";
-        container.appendChild(buttons);
+        buttons.style.margin = "5px";
+        Array.from(buttons.childNodes).forEach(e =>
+        {
+            e.style.height = "80px";
+            e.style.width = "115px";
+            e.style.margin = "5px";
+            e.style.textAlign = "center";
+        });
 
-        gridSizeButton.style.height = "75px";
-        gridSizeButton.style.width = "75px";
-        gridSizeButton.textContent = "New Grid Size";
-        gridSizeButton.style.textAlign = "justify";
-
+        grid.style.display = "grid";
+        grid.style.height = "1000px";
+        grid.style.width = "1000px";
+        grid.style.borderStyle = "solid";
+        grid.style.borderWidth = "5px";
+        grid.style.borderColor = "#1f548c";
+        
+        gridSizeButton.textContent = "New Grid";
+        gridDichotomyButton.textContent = "Style:\nDichotomy";
+        gridGradientButton.textContent = "Style:\nGradient";
+        gridColorButton.textContent = "Style:\nColor";
+        
         gridSizeButton.addEventListener("click", () =>
         {
             while (grid.firstChild)
@@ -68,17 +84,19 @@
             }
             createGrid()
         });
-        buttons.appendChild(gridSizeButton);
-        
-        grid.style.display = "grid";
-        grid.style.height = "1000px";
-        grid.style.width = "1000px";
-        grid.style.borderStyle = "solid";
-        grid.style.borderWidth = "1px";
-        grid.style.borderColor = "springgreen";
-        container.appendChild(grid);
-        
-        function createGrid ()
+        gridDichotomyButton.addEventListener("click", () =>
+        {
+            gridColorOption = "dichotomy";
+        });
+        gridGradientButton.addEventListener("click", () =>
+        {
+            gridColorOption = "gradient";
+        });
+        gridColorButton.addEventListener("click", () =>
+        {
+            gridColorOption = "color";
+        });
+        function createGrid()
         {
             while (true)
             {
@@ -105,28 +123,57 @@
             {
                 element.addEventListener("mouseenter", () =>
                 {
-                    backColor = element.style.backgroundColor;
-                    if (backColor != "rgb(5, 5, 5)")
+                    switch (gridColorOption)
                     {
-                        R = (backColor.slice(4, 7)) - 25;
-                        if (Number.isNaN(R))
-                        {
-                            R = (backColor.slice(4, 6)) - 25;
-                        }
-                        G = (backColor.slice(9, 12)) - 25;
-                        if (Number.isNaN(G))
-                        {
-                            G = (backColor.slice(8, 10)) - 25;
-                        }
-                        B = (backColor.slice(14, 17)) - 25;
-                        if (Number.isNaN(B))
-                        {
-                            B = (backColor.slice(12, 14)) - 25;
-                        }
-                        element.style.backgroundColor = "rgb(" + R + ", " + G + ", " + B + ")";
+                        case "dichotomy":
+                            gridDichotomy(element);
+                            break;
+                        case "gradient":
+                            gridGradient(element);
+                            break;
+                        case "color":
+                            gridColor(element);
+                            break;
                     }
                 });
             });
+        }
+        function gridDichotomy(element)
+        {
+            element.style.backgroundColor = "rgb(0, 0, 0)";
+        }
+        function gridGradient(element)
+        {
+            backColor = element.style.backgroundColor;
+            if (backColor != "rgb(5, 5, 5)" && backColor != "rgb(0, 0, 0)")
+            {
+                R = (backColor.slice(4, 7)) - 25;
+                if (Number.isNaN(R))
+                {
+                    R = (backColor.slice(4, 6)) - 25;
+                }
+                G = (backColor.slice(9, 12)) - 25;
+                if (Number.isNaN(G))
+                {
+                    G = (backColor.slice(8, 10)) - 25;
+                }
+                B = (backColor.slice(14, 17)) - 25;
+                if (Number.isNaN(B))
+                {
+                    B = (backColor.slice(12, 14)) - 25;
+                }
+                element.style.backgroundColor = "rgb(" + R + ", " + G + ", " + B + ")";
+            }else if (backColor == "rgb(5, 5, 5)")
+            {
+                element.style.backgroundColor = "rgb(0, 0, 0)";
+            }
+        }
+        function gridColor(element)
+        {
+            R = Math.floor(Math.random() * 255);
+            G = Math.floor(Math.random() * 255);
+            B = Math.floor(Math.random() * 255);
+            element.style.backgroundColor = "rgb(" + R + ", " + G + ", " + B + ")";
         }
     </script>
 </body>
